@@ -49,20 +49,22 @@
 
         <div class="row mt-4">
             <div class="col">
-                <ul class="list-inline d-flex flex-wrap justify-content-between">
-                    <li class="list-inline-item col-12 col-sm-5 col-lg-3 mb-5">
-                        <a href="#" class="card border border-light border-1 stretched-link text-decoration-none shadow">
-                            <img id="image-url" src="/images/teddy_1.jpg" alt="ours en peluche" class="card-img-top border-bottom border-light shadow-sm">
-                            <div class="card-body">
-                                <h2 id="name" class="card-title text-primary">Norbert</h2>
-                                <p id="price" class="card-subtitle text-primary fs-5">29.00€</p>
-                                <p id="description" class="card-text text-dark">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                
+                <ul id="items-list" class="list-inline d-flex flex-wrap justify-content-around">
+                    <template id="item-card">
+                        <li class="list-inline-item col-12 col-sm-5 col-lg-3 mb-5">
+                            <a href="#" class="card border border-light border-1 stretched-link text-decoration-none shadow">
+                                <img id="image" src="" class="card-img-top border-bottom border-light shadow-sm">
+                                <div class="card-body">
+                                    <h2 id="name" class="card-title text-primary"></h2>
+                                    <p id="price" class="card-subtitle text-primary fs-5"></p>
+                                    <p id="description" class="card-text text-dark">
+                                    </p>
+                                </div>
+                            </a>
+                        </li>                        
+                    </template>
+
+                    
                 </ul>
             </div>
         </div>
@@ -76,7 +78,7 @@
         </div>
     </footer>
 
-    
+    <script src="./index.js"></script>
 </body>
 
 
