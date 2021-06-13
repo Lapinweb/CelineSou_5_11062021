@@ -10731,3 +10731,9 @@ textarea.form-control-lg {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+
+/*Mon code CSS*/
+.card-img-top{
+  object-fit: cover;
+}
