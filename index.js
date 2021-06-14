@@ -32,7 +32,7 @@ function displayItem(item){
     const description = item.description;
     const id = item._id;
 
-    //Récupérer la template dans le code HTML
+    //Récupérer la template dans le HTML
     const itemTemplate = document.getElementById("item-card");
     const itemClone = document.importNode(itemTemplate.content, true);
 
