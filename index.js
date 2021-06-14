@@ -36,7 +36,7 @@ function displayItem(item){
     const image = itemClone.getElementById("image");
     image.setAttribute("src", imageUrl);
     itemClone.getElementById("name").textContent = name;
-    itemClone.getElementById("price").textContent = price.toFixed(2);
+    itemClone.getElementById("price").textContent = price.toFixed(2) + "€";
     itemClone.getElementById("description").textContent = description;
 
     document.getElementById("items-list").appendChild(itemClone);
