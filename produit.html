@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/style.css" /
+    <link rel="stylesheet" href="css/style.css" />
     
     <title>Orinoco</title>
 
@@ -27,7 +27,7 @@
                      </button>
                      <div id="navbarContent" class="collapse navbar-collapse justify-content-end">
                          <ul class="navbar-nav fs-5">
-                            <li class="nav-item active me-3">
+                            <li class="nav-item me-3">
                                 <a href="index.html" class="nav-link">Accueil</a>
                             </li>
                             <li class="nav-item me-4">
@@ -43,33 +43,18 @@
     </header>
 
     <main class="container my-5">
-        <div class="row mt-4">
-            <div class="col">
-                <h1>Ours en peluche</h1>
+        <div class="row">
+            <div class="col-12 col-md-5">
+                <img id="image" src="/images/teddy_1.jpg" class="img-cover border-1 border-light shadow-lg w-100">
+            </div>
+
+            <div class="col-12 col-md-6">
+                <h1 id="name" class="card-title text-primary">Norbert</h1>
+                <p id="price" class="card-subtitle text-primary fs-3">29,00€</p>
+                <p id="description" class="card-text text-dark mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
         </div>
 
-        <div class="row mt-4">
-            <div class="col">
-                <ul id="items-list" class="list-inline d-flex flex-wrap justify-content-around">
-                    <template id="item-card">
-                        <li class="list-inline-item col-12 col-md-5 col-lg-3 mb-5">
-                            <a href="produit.html" class="card border border-light border-1 stretched-link text-decoration-none shadow h-100">
-                                <img id="image" src="" class="card-img-top border-bottom border-light shadow-sm h-50 img-cover">
-                                <div class="card-body">
-                                    <h2 id="name" class="card-title text-primary"></h2>
-                                    <p id="price" class="card-subtitle text-primary fs-5"></p>
-                                    <p id="description" class="card-text text-dark">
-                                    </p>
-                                </div>
-                            </a>
-                        </li>                        
-                    </template>
-
-                    
-                </ul>
-            </div>
-        </div>
     </main>
 
     <footer class="container-fluid bg-light text-dark py-2">
@@ -79,12 +64,12 @@
             </div>
         </div>
     </footer>
->
-    <script src="./index.js"></script>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
+    
 </body>
 
 

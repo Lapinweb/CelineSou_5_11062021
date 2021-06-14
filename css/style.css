@@ -10734,6 +10734,16 @@ textarea.form-control-lg {
 
 
 /*Mon code CSS*/
-.card-img-top{
+.img-cover{
   object-fit: cover;
+}
+
+html{
+  position: relative;
+  min-height: 100%;
+}
+
+footer{
+  position: absolute;
+  bottom: 0;
 }
