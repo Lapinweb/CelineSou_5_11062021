@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/style.css" />
     
     <title>Orinoco</title>
-
 </head>
 
 <body>
@@ -44,14 +43,30 @@
 
     <main class="container my-5">
         <div class="row">
-            <div class="col-12 col-md-5">
+            <div class="col-12 col-md-6">
                 <img id="image" src="/images/teddy_1.jpg" class="img-cover border-1 border-light shadow-lg w-100">
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 mt-3 mt-md-0">
                 <h1 id="name" class="card-title text-primary">Norbert</h1>
                 <p id="price" class="card-subtitle text-primary fs-3">29,00€</p>
                 <p id="description" class="card-text text-dark mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 col-md-6 d-flex align-items-center">
+                <select name="personnalisation" id="colors" class="w-50">
+                    <option value="">Choisissez une option</option>
+                    <option value="tan">Tan</option>
+                    <option value="chocolate">Chocolate</option>
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+
+            <div class="col-12 col-md-6 my-5 my-md-0 text-center">
+                <button class="btn btn-primary btn-outline-secondary btn-lg text-white">Ajouter au Panier</button>
             </div>
         </div>
 
