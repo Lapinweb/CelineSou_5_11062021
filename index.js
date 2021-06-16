@@ -13,10 +13,11 @@ function getItems() {
     return fetch("http://localhost:3000/api/teddies")
         .then(function(res){
             if (res.ok){
-                return res.json();
+                return res.json(); //le json est converti en Javascript
             }
         })
         .then(function(items){
+            console.log("items :", items)
             return items;
         })
         .catch(function(error){
@@ -40,10 +41,10 @@ function displayItem(item){
     const image = itemClone.getElementById("image");
     image.setAttribute("src", imageUrl);
     itemClone.getElementById("name").textContent = name;
-    itemClone.getElementById("price").textContent = price.toFixed(2) + "€"; //rajoute 2 décimales qui représentent les centimes
+    itemClone.getElementById("price").textContent = price.toFixed(2) + "€"; //affiche 2 décimales qui représentent les centimes
     itemClone.getElementById("description").textContent = description;
     itemClone.getElementById("item-link").setAttribute("href", "produit.html?id=" + id); //rajoute le paramètre id derrière l'URL vers la page produit
 
-    //Ajouter un élément basé sur la template
+    //Ajouter un élément en utilisant la template
     document.getElementById("items-list").appendChild(itemClone);
 }

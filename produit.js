@@ -1,27 +1,33 @@
-//Récupérer la chaine de l'id dans l'URL
-const param = window.location.search;
-console.log("window.location.search :", param);
+//Créer une valeur qui contient l'ID du produit
+const id = getId();
 
-const id = param.replace("?id=", ""); //enlève les caractères inutilisés
-console.log("id :" , id);
+///Récupérer la chaine de l'id dans l'URL
+function getId(){
+    const param = window.location.search;
 
-const urlId = "http://localhost:3000/api/teddies/" + id;
-console.log("URL :", urlId);
+    console.log("window.location.search :", param);
+    console.log("id :" , param.replace("?id=", ""));
 
-
-//Créer le contenu de l'élément avec les infos du produit
-createItemElement();
-
-async function createItemElement(){
-    const item = await getItem();
-    displayItemInfo(item);
-    for (color of item.colors)
-    addCustomOption(color);
+    return param.replace("?id=", ""); //enlève les caractères inutilisés devant l'id
 }
 
 
+//----------------------------------------------------Afficher de manière dynamique l'élément sélectionné-------------------------------------------------------
+
+//Créer le contenu de l'élément avec les infos du produit et les options de personnalisation
+createItemElement();
+
+async function createItemElement(){
+    const item = await getOneItem();
+
+    displayItemInfo(item);
+
+    for (color of item.colors) //boucle pour chaque options de personnalisation
+    addCustomOption(color);
+}
+
 //Récupérer les données du produit grâce à son ID avec une requête GET
-function getItem(){
+function getOneItem(){
     return fetch("http://localhost:3000/api/teddies/" + id)
         .then(function(res){
             if(res.ok) {
@@ -29,7 +35,7 @@ function getItem(){
             }
         })
         .then(function(item){
-            console.log(item);
+            console.log("item après fetch:", item);
             return item;
         })
         .catch(function(err){
@@ -60,5 +66,59 @@ function addCustomOption(option){
 
     //Modifier le contenu de "option"
     newOption.textContent = option;
-    newOption.setAttribute("value", option.toLowerCase())
+    newOption.setAttribute("value", option)
+}
+
+
+
+
+//---------------------------------------------------------Ajouter le produit au panier-------------------------------------------------------------------------
+
+
+//Au click du bouton, le produit est ajouté au panier
+const basketButton = document.getElementById("btn-basket");
+
+basketButton.addEventListener("click", function(event){
+
+    event.preventDefault();
+    addToBasket();
+
+});
+
+
+async function addToBasket() {
+    const item = await getOneItem();
+    console.log("selectedItem", item);
+
+    //on vérifie si le array basketContent existe déjà dans le localStorage
+    if(!localStorage.getItem("basketContent")){
+        createNewBasketContent(item);
+
+    }else{
+        GetBasketContent(item);
+    }
+
+
+    
+}
+
+
+//Créer un array basketContent auquel on ajoute le produit
+function createNewBasketContent(newItem){
+    let basketContent = [];
+    basketContent.push(newItem);
+    console.log("basketContent créé", basketContent);
+
+    //Envoyer vers le localStorage
+    localStorage.setItem("basketContent", JSON.stringify(basketContent));
+}
+
+//Récupérer le array basketContent déjà existant pour rajouter un autre produit
+function GetBasketContent(newItem){
+    let basketContent = JSON.parse(localStorage.getItem("basketContent"));
+    basketContent.push(newItem);
+    console.log("basketContent existe déjà", basketContent);
+    
+    //Envoyer vers le localStorage
+    localStorage.setItem("basketContent", JSON.stringify(basketContent));
 }
