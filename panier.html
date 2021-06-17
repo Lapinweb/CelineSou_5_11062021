@@ -43,8 +43,11 @@
 
     <main class="container mt-4 mb-5 pb-1">
         <div class="row mt-4 mb-3">
-            <div class="col">
+            <div class="col-5">
                 <h1>Panier</h1>
+            </div>
+            <div class="col-7 text-end">
+                <button id="btn-emptybasket" class="btn btn-danger">Vider le panier</button>
             </div>
         </div>
 
@@ -64,21 +67,21 @@
             <template id="basket-template">
                 <li class="list-inline-item col-12 col-lg-5 my-3">
                     <div class="card border border-light border-2">
-                        <div class="row w-100">
+                        <div class="row">
                             <div class="col-6 d-none d-sm-block">
                                 <div class="ratio ratio-4x3">
                                     <img id="image" src="" class="card-img-top img-cover w-100 border border-2 border-light">
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 ms-5 ms-sm-0">
-                                <h2 id="name" class="mt-2 mb-0 fs-4"></h2>
-                                <p id="price" class="fs-5"></p>
-                                <p id="option" class="fs-6"></p>
+                            <div class="col-12 col-sm-6">
+                                <h2 id="name" class="text-primary mt-2 mb-0 fs-4 ps-5 ps-sm-0"></h2>
+                                <p id="price" class="text-primary fs-5 ps-5 ps-sm-0"></p>
+                                <p id="option" class="fs-6 ps-5 ps-sm-0"></p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col text-center">
-                                <button class="btn btn-danger w-100">Retirer du panier</button>
+                                <button id="btn-remove" class="btn-remove btn btn-danger w-100">Supprimer l'article</button>
                             </div> 
                         </div>                          
                     </div>
@@ -89,9 +92,32 @@
         </ul>
 
 
-        <div class="row my-3">
+        <div class="row my-4">
             <div class="col">
                 <p id="total-price" class="fs-2">Prix total : 0€</p>
+            </div>
+        </div>
+
+        <div id="form" class="row py-5 border-top border-2 border-light">
+            <div class="col-12">
+                <form>
+                    <label for="firstName" class="form-label">Prénom</label>
+                    <input type="text" id="firstName" class="form-control mb-4">
+
+                    <label for="lastName" class="form-label">Nom</label>
+                    <input type="text" id="lastName" class="form-control mb-4">
+
+                    <label for="address" class="form-label">Adresse</label>
+                    <input type="text" id="address" class="form-control mb-4">
+
+                    <label for="city" class="form-label">Ville</label>
+                    <input type="text" id="city" class="form-control mb-4">
+
+                    <label for="email" class="form-label">Adresse Email</label>
+                    <input type="email" id="email" class="form-control mb-4">
+
+                    <button type="submit" class="btn btn-primary btn-outline-secondary btn-lg text-white">Envoyer</button>
+                </form>
             </div>
         </div>
 
