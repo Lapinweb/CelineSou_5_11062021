@@ -41,33 +41,56 @@
         
     </header>
 
-    <main class="container my-5">
-        <div class="row mb-4">
+    <main class="container mt-4 mb-5 pb-1">
+        <div class="row mt-4 mb-3">
             <div class="col">
                 <h1>Panier</h1>
             </div>
         </div>
 
-        <div id="basket-list" class="d-flex justify-content-around flex-wrap">
-            <div class="card border border-light border-2 col-12 col-md-5 col-xl-4 my-3">
-                <div class="row">
-                    <div class="w-50">
-                        <div class="ratio-4x3">
-                            <img id="image" src="images/teddy_1.jpg" class="card-img-top img-cover w-100 border border-2 border-light">
-                        </div>
-                    </div>
-
-                    <div class="w-50">
-                        <h2 id="name" class="mt-2 mb-0 fs-3">Norbert</h2>
-                        <p id="price" class="fs-5">29.00€</p>
+        <div id="message-empty">
+            <template id="message-emptybasket">
+                <div class="row my-5">
+                    <div class="col-12 text-center">
+                        <p class="fs-5">Le panier est vide.</p>
                     </div>
                 </div>
+            </template>            
+        </div>
 
-                <div class="row">
-                    <div class="col text-center">
-                        <button class="btn btn-danger w-100">Retirer du panier</button>
-                    </div> 
-                </div>          
+
+        <ul id="basket-list" class="list-inline d-flex justify-content-around flex-wrap mb-4">
+
+            <template id="basket-template">
+                <li class="list-inline-item col-12 col-lg-5 my-3">
+                    <div class="card border border-light border-2">
+                        <div class="row w-100">
+                            <div class="w-50">
+                                <div class="ratio ratio-4x3">
+                                    <img id="image" src="" class="card-img-top img-cover w-100 border border-2 border-light">
+                                </div>
+                            </div>
+                            <div class="w-50">
+                                <h2 id="name" class="mt-2 mb-0 fs-3"></h2>
+                                <p id="price" class="fs-5"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <button class="btn btn-danger w-100">Retirer du panier</button>
+                            </div> 
+                        </div>                          
+                    </div>
+        
+                </li>                
+            </template>
+            
+        </ul>
+
+
+        <div class="row my-3">
+            <div class="col">
+                <p id="total-price" class="fs-2">Prix total : 0€</p>
             </div>
         </div>
 
