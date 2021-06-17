@@ -61,7 +61,7 @@ function displayItemInfo(item){
 function addCustomOption(option){
     //Créer un nouvel élément "option" rajouté au menu "select"
     const newOption = document.createElement("option");
-    let optionMenu = document.getElementById("colors");
+    let optionMenu = document.getElementById("option-produit");
     optionMenu.appendChild(newOption);
 
     //Modifier le contenu de "option"
@@ -81,14 +81,20 @@ const basketButton = document.getElementById("btn-basket");
 basketButton.addEventListener("click", function(event){
 
     event.preventDefault();
+
     addToBasket();
 
 });
 
 
 async function addToBasket() {
-    const item = await getOneItem();
+    //requête GET du produit, l'objet est stocké dans la valeur item
+    const item = await getOneItem(); 
     console.log("selectedItem", item);
+
+    //Rajouter l'option de personnalisation sélectionné à l'objet item
+    addSelectedOption(item);
+    console.log("item avec selectedOption :", item);
 
     //on vérifie si le array basketContent existe déjà dans le localStorage
     if(!localStorage.getItem("basketContent")){
@@ -98,10 +104,15 @@ async function addToBasket() {
         GetBasketContent(item);
     }
 
-
-    
 }
 
+//Rajouter l'option de personnalisation à l'objet
+function addSelectedOption(object){
+    const selectionMenu = document.getElementById("option-produit");
+
+    object.selectedOption = selectionMenu.value;
+    console.log("selectionMenu.value =", selectionMenu.value);
+}
 
 //Créer un array basketContent auquel on ajoute le produit
 function createNewBasketContent(newItem){

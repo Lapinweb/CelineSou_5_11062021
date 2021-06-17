@@ -46,7 +46,8 @@ function getBasketContent() {
 function displayBasketItem(item) {
     const imageUrl = item.imageUrl;
     const name = item.name;
-    const price = item.price/100; //convertie le prix en euros    
+    const price = item.price/100; //convertie le prix en euros
+    const option = item.selectedOption;
 
     //Récupérer la template dans le code HTML
     const basketTemplate = document.getElementById("basket-template");
@@ -57,6 +58,7 @@ function displayBasketItem(item) {
     image.setAttribute("src", imageUrl);
     basketClone.getElementById("name").textContent = name;
     basketClone.getElementById("price").textContent = price.toFixed(2) + "€"; //Affiche 2 décimales (les centimes)
+    basketClone.getElementById("option").textContent = "Option : " + option;
 
     //Ajouter un élément en utilisant la template
     document.getElementById("basket-list").appendChild(basketClone);
