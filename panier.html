@@ -65,7 +65,7 @@
         <ul id="basket-list" class="list-inline d-flex justify-content-around flex-wrap mb-4">
 
             <template id="basket-template">
-                <li class="list-inline-item col-12 col-lg-5 my-3">
+                <li class="list-element list-inline-item col-12 col-lg-5 my-3">
                     <div class="card border border-light border-2">
                         <div class="row">
                             <div class="col-6 d-none d-sm-block">
@@ -92,34 +92,50 @@
         </ul>
 
 
-        <div class="row my-4">
+        <div class="row my-5">
             <div class="col">
                 <p id="total-price" class="fs-2">Prix total : 0€</p>
             </div>
         </div>
 
-        <div id="form" class="row py-5 border-top border-2 border-light">
-            <div class="col-12">
-                <form>
-                    <label for="firstName" class="form-label">Prénom</label>
-                    <input type="text" id="firstName" class="form-control mb-4">
 
-                    <label for="lastName" class="form-label">Nom</label>
-                    <input type="text" id="lastName" class="form-control mb-4">
-
-                    <label for="address" class="form-label">Adresse</label>
-                    <input type="text" id="address" class="form-control mb-4">
-
-                    <label for="city" class="form-label">Ville</label>
-                    <input type="text" id="city" class="form-control mb-4">
-
-                    <label for="email" class="form-label">Adresse Email</label>
-                    <input type="email" id="email" class="form-control mb-4">
-
-                    <button type="submit" class="btn btn-primary btn-outline-secondary btn-lg text-white">Envoyer</button>
-                </form>
+        <div id="form">
+            <div class="row py-5 border-top border-2 border-light">
+                <div class="col">
+                    <h2>Commande</h2>
+                </div>
             </div>
+            <div class="row pb-5">
+                <div class="col-12 col-lg-8">
+                    <form>
+                        <label for="firstName" class="form-label">Prénom <span class="text-danger">*</span></label>
+                        <input type="text" required id="firstName" class="form-control mb-4">
+
+                        <label for="lastName" class="form-label">Nom <span class="text-danger">*</span></label>
+                        <input type="text" required id="lastName" class="form-control mb-4">
+
+                        <label for="address" class="form-label">Adresse <span class="text-danger">*</span></label>
+                        <input type="text" required id="address" class="form-control mb-4">
+
+                        <label for="city" class="form-label">Ville <span class="text-danger">*</span></label>
+                        <input type="text" required id="city" class="form-control mb-4">
+
+                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" required id="email" class="form-control mb-4">
+
+                        <div class="col-12 text-end">
+                            <p class="form-text text-danger">* Champs obligatoires</p>                            
+                        </div>
+
+
+                        <button id="form-btn" type="submit" class="btn btn-primary btn-outline-secondary btn-lg text-white mt-4">Envoyer</button>
+                    </form>
+                </div>
+            </div>            
         </div>
+
+
+
 
 
     </main>
