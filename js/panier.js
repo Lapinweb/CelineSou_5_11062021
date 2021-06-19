@@ -232,19 +232,22 @@ document.getElementById("form-btn").addEventListener("click", function(event){
             },
             body: JSON.stringify({contact, products})
         })
-        .then(function(res){
+        .then(function(res){ //le serveur nous renvoie l'ID de commande et ce qu'on lui a envoyé
             if (res.ok) {
                 return res.json();
             }
         })
-        .then(function(value){
+        .then(function(res){
             //on envoie l'ID de commande dans le localStorage
-            console.log("renvoie", value);
-            localStorage.setItem("orderId", JSON.stringify(value.orderId))
+            console.log("réponse :", res);
+            localStorage.setItem("orderId", JSON.stringify(res.orderId));
+
+            //on envoie l'utilisateur vers la page de confirmation
+            window.location.assign("confirmation.html");
         })
-        .catch[function(err){
+        .catch(function(err){
             alert(error);
-        }]
+        })
 
     }else{
         //si un champ n'est pas rempli, on change son style
