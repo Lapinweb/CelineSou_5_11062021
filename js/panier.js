@@ -1,11 +1,28 @@
-const { get } = require("http");
 
-createBasketList();
+
+//Récupérer le contenu du panier dans le localStorage et le stocker dans une valeur
+let basketContent = getBasketContent();
+console.log("basketContent :", basketContent)
+
+
+function getBasketContent() {
+    if (!localStorage.getItem("basketContent")) {
+        return [];
+    }else{
+        let basketContent = JSON.parse(localStorage.getItem("basketContent"));
+
+        console.log("basketContent :", basketContent)
+
+        return basketContent;
+    }
+}
+
+//------------------------------------------------------------------- Afficher la liste des produits dans le panier --------------------------------------------------------------
 
 //Générer le contenu de la page dynamiquement
-async function createBasketList() {
-    let basketContent = await getBasketContent();
-    console.log("basketContent :", basketContent)
+createBasketList();
+
+function createBasketList() {
 
     //si le panier est vide, on affiche un message et on cache le formulaire
     if (basketContent.length === 0) {
@@ -18,15 +35,10 @@ async function createBasketList() {
             displayBasketItem(item);
         }
 
-        let totalPrice = calculateTotalPrice(basketContent);
-        displayTotalPrice(totalPrice);
-        
-        //La fonction est ajouté après que les boutons soient créé pour être fonctionnelle
+        //La fonction pour supprimer l'article est ajouté après que les boutons soient créé pour être fonctionnelle
         buttonRemoveItem(basketContent);
     }
 }
-
-//---------------------------------------------------- Afficher la liste des produits dans le panier et son prix total ---------------------------------------------------------------//
 
 //Afficher un message si le panier est vide
 function displayEmptyBasket() {
@@ -34,19 +46,6 @@ function displayEmptyBasket() {
     const messageClone = document.importNode(messageTemplate.content, true);
 
     document.getElementById("message-empty").appendChild(messageClone);
-}
-
-//Récupérer le contenu du panier dans le localStorage
-function getBasketContent() {
-    if (!localStorage.getItem("basketContent")) {
-        return [];
-    }else{
-        let basketContent = JSON.parse(localStorage.getItem("basketContent"));
-
-        console.log("basketContent :", basketContent)
-
-        return basketContent;
-    }
 }
 
 //Ajouter des éléments HTML pour créer une carte avec les détails du produit
@@ -71,6 +70,9 @@ function displayBasketItem(item) {
     document.getElementById("basket-list").appendChild(basketClone);
 }
 
+
+//------------------------------------------------------------------------Afficher le prix total du panier-------------------------------------------------------------------------
+
 //Calculer le prix total
 function calculateTotalPrice(listOfItems) {
     let totalPrice = 0
@@ -79,18 +81,20 @@ function calculateTotalPrice(listOfItems) {
     }
     totalPrice /= 100;
     console.log("prix total =", totalPrice.toFixed(2), "€")
+    
     return totalPrice
 }
 
-//Afficher le prix total
-function displayTotalPrice(price) {
-    document.getElementById("total-price").textContent = "Prix total : " + price.toFixed(2) + "€";
-}
+let totalPrice = calculateTotalPrice(basketContent);
+
+//Afficher le prix total sur la page
+document.getElementById("total-price").textContent = "Prix total : " + totalPrice.toFixed(2) + "€";
+
+//Envoyer la valeur au localStorage
+localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
 
 
-
-
-//------------------------------------------------------------------- Retirer les produits du panier ------------------------------------------------------------------------//
+//------------------------------------------------------------------- Retirer les produits du panier ------------------------------------------------------------------------
 
 //Bouton supprimer un article, la fonction doit être appelé après la création des boutons pour être fonctionnelle 
 function buttonRemoveItem(basketContent) {
@@ -107,7 +111,7 @@ function buttonRemoveItem(basketContent) {
             localStorage.setItem("basketContent", JSON.stringify(basketContent)); 
 
             //Actualiser la page
-            location.reload();
+            window.location.reload();
 
             //Message article supprimé
             alert("L'article a été supprimé.")
@@ -121,14 +125,14 @@ document.getElementById("btn-emptybasket").addEventListener("click", function(){
     localStorage.clear("basketContent");
 
     //Actualiser la page
-    location.reload();
+    window.location.reload();
 
     //Message panier vide
     alert("Le panier a été vidé.");
 })
 
 
-//-------------------------------------------------- Formulaire de contact -----------------------------------------------------------------------------------------------//
+//--------------------------------------------------------------------- Formulaire de contact -----------------------------------------------------------------------------------------------
 
 //Cacher le formulaire si le panier est vide
 function hideForm(){
@@ -148,25 +152,23 @@ const inputEmail = document.getElementById("email");
 
 const formInputs = [inputFirstName, inputLastName, inputAddress, inputCity, inputEmail];
 
+//Valeurs des regex
+const regexFirstName = /^[a-zA-ZéèêôîïÉÈÊ\s-]{2,20}$/;
+const regexLastName = /^[a-zA-ZéèêôîïÉÈÊ\s-]{2,20}$/;
+const regexAddress = /^[a-zA-Z0-9éèêôîïÉÈÊ\s-]{3,20}$/;
+const regexCity = /^[a-zA-ZéèêôîïÉÈÊ\s-]{3,20}$/;
+const regexEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-//La valeur validateForm est true par défaut et devient false dès qu'une valeur d'input est erroné;
-let validateForm = true;
 
 
-//Fonction pour vérifier la valeur de input avec une regex
-function checkInputValue(input, regex) {
+//Fonction pour vérifier la valeur de input avec une regex et changer le style de manière dynamique
+function changeInputStyle(input, regex) {
     input.addEventListener("input", function(){
         if (regex.test(input.value) === false) {
-            validateForm = false;
-            console.log("validateForm checkInputValue:", validateForm);
-
             //changer l'apparence de l'input pour montrer un champ erroné
             input.classList.add("is-invalid");
             input.classList.remove("is-valid");
         }else{
-            validateForm = true;
-            console.log("validateForm checkInputValue:", validateForm);
-
             //changer l'apparence de l'input pour montrer un champ correctement remplie
             input.classList.add("is-valid");
             input.classList.remove("is-invalid");
@@ -174,12 +176,24 @@ function checkInputValue(input, regex) {
     })
 }
 
-//Appeler la fonction avec le input et le regex correspondant
-checkInputValue(inputFirstName, /^[a-zA-ZéèêôîïÉÈÊ\s-]{2,20}$/);
-checkInputValue(inputLastName, /^[a-zA-ZéèêôîïÉÈÊ\s-]{2,20}$/);
-checkInputValue(inputAddress, /^[a-zA-Z0-9éèêôîïÉÈÊ\s-]{3,20}$/);
-checkInputValue(inputCity, /^[a-zA-ZéèêôîïÉÈÊ\s-]{3,20}$/);
-checkInputValue(inputEmail, /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/);
+changeInputStyle(inputFirstName, regexFirstName);
+changeInputStyle(inputLastName, regexLastName);
+changeInputStyle(inputAddress, regexAddress);
+changeInputStyle(inputCity, regexCity);
+changeInputStyle(inputEmail, regexEmail);
+
+
+
+
+//Fonction pour valider la valeur de input
+function validateInput(input, regex){
+    if (regex.test(input.value) === true) {
+        return true
+    }else{
+        return false
+    }
+}
+
 
 
 //Envoyer les données du formulaire
@@ -188,42 +202,62 @@ checkInputValue(inputEmail, /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/);
 document.getElementById("form-btn").addEventListener("click", function(event){
     event.preventDefault(); //le comportement par défaut du bouton est désactivé
 
-    //signaler si les champs ne sont pas remplies
-    for (let input of formInputs) {
-        //si au moins un champ n'est pas rempli, le formulaire n'est pas valide, validateForm = false
-        if (!input.value) {
-            input.classList.add("is-invalid");
-            input.classList.remove("is-valid");
-            validateForm = false;
-            console.log("validateForm champs vide :", validateForm);
-        }
-    }
+    //on vérifie si au moment d'appuyer sur le bouton, les champs sont validés
+    let validateFirstName = validateInput(inputFirstName, regexFirstName);
+    let validateLastName = validateInput(inputLastName, regexLastName);
+    let validateAddress = validateInput(inputAddress, regexAddress);
+    let validateCity = validateInput(inputCity, regexCity);
+    let validateEmail = validateInput(inputEmail, regexEmail);
 
-    console.log("validateForm final :", validateForm);
+    console.log("Champs validés :",validateFirstName, validateLastName, validateAddress, validateCity, validateEmail);
 
-    //le formulaire est validé si validateForm = true
-    if (validateForm === true) {
-        //envoyer les données au serveur
-        sendToServer();
-
-    }else{
-        //si le formulaire n'est pas valide, on affiche une alerte
-        alert("Les champs ne sont pas valides.");
-    }
-});
-
-//Envoyer Les donnée aux serveur
-async function sendToServer() {
+    //le formulaire est validé si tous les champs sont validés
+    if (validateFirstName && validateLastName && validateAddress && validateCity && validateEmail) {
         //récupérer les valeurs du formulaire dans l'objet contact
-        let contact = await getFormValues();
-        console.log("contact :")
-
+        let contact = getFormValues();
+        console.log("contact :", contact);        
+        
         //récupérer le tableau de produits
         let products = getItemId();
+        console.log("products :", products);
 
-        //faire une requête POST
+        console.log("contact et products :", {contact, products})
+        
+        //envoyer les données au serveur
+        fetch("http://localhost:3000/api/teddies/order", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({contact, products})
+        })
+        .then(function(res){
+            if (res.ok) {
+                return res.json();
+            }
+        })
+        .then(function(value){
+            //on envoie l'ID de commande dans le localStorage
+            console.log("renvoie", value);
+            localStorage.setItem("orderId", JSON.stringify(value.orderId))
+        })
+        .catch[function(err){
+            alert(error);
+        }]
 
-}
+    }else{
+        //si un champ n'est pas rempli, on change son style
+        for (let input of formInputs) {
+            if (!input.value) {
+                input.classList.add("is-invalid");
+                input.classList.remove("is-valid");
+            }
+        }
+        //si le formulaire n'est pas valide, on affiche une alerte
+        alert("Tous les champs ne sont pas valides.");
+    }
+});
 
 //Récupérer les valeurs du formulaire dans un objet
 function getFormValues(contact) {
@@ -232,15 +266,13 @@ function getFormValues(contact) {
         lastName: inputLastName.value,
         address: inputAddress.value,
         city: inputCity.value,
-        email: input.value
+        email: inputEmail.value
     }
     return contact
 }
 
 //Récupérer le tableau de produits
-async function getItemId(){
-    //on récupère la liste de produits du localStorage
-    let basketContent = await getBasketContent();
+function getItemId(){
     let itemsId = [];
     for (item of basketContent) {
         itemsId.push(item._id)
