@@ -153,10 +153,10 @@ const inputEmail = document.getElementById("email");
 const formInputs = [inputFirstName, inputLastName, inputAddress, inputCity, inputEmail];
 
 //Valeurs des regex
-const regexFirstName = /^[a-zA-ZéèêôîïÉÈÊ\s-]{2,20}$/;
-const regexLastName = /^[a-zA-ZéèêôîïÉÈÊ\s-]{2,20}$/;
-const regexAddress = /^[a-zA-Z0-9éèêôîïÉÈÊ\s-]{3,20}$/;
-const regexCity = /^[a-zA-ZéèêôîïÉÈÊ\s-]{3,20}$/;
+const regexFirstName = /^[a-zA-ZéèêôîïÉÈÊ\s-]{2,30}$/;
+const regexLastName = /^[a-zA-ZéèêôîïÉÈÊ\s-]{2,30}$/;
+const regexAddress = /^[a-zA-Z0-9éèêôîïÉÈÊ\s-]{3,}$/;
+const regexCity = /^[a-zA-ZéèêôîïÉÈÊ\s-]{3,100}$/;
 const regexEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 
@@ -230,7 +230,7 @@ document.getElementById("form-btn").addEventListener("click", function(event){
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({contact, products})
+            body: JSON.stringify({contact, products}) //convertie les données au format json
         })
         .then(function(res){ //le serveur nous renvoie l'ID de commande et ce qu'on lui a envoyé
             if (res.ok) {
