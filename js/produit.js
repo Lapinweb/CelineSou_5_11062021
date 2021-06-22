@@ -79,10 +79,10 @@ function addCustomOption(option){
 const basketButton = document.getElementById("btn-basket");
 
 basketButton.addEventListener("click", function(event){
-
-    event.preventDefault();
-
     addToBasket();
+
+    //afficher un message pour prévenir l'utilisateur
+    alert("Le produit a été ajouté au panier."); 
 
 });
 
@@ -101,7 +101,7 @@ async function addToBasket() {
         createNewBasketContent(item);
 
     }else{
-        GetBasketContent(item);
+        getBasketContent(item);
     }
 
 }
@@ -116,8 +116,7 @@ function addSelectedOption(object){
 
 //Créer un array basketContent auquel on ajoute le produit
 function createNewBasketContent(newItem){
-    let basketContent = [];
-    basketContent.push(newItem);
+    let basketContent = [newItem];
     console.log("basketContent créé", basketContent);
 
     //Envoyer vers le localStorage
@@ -125,7 +124,7 @@ function createNewBasketContent(newItem){
 }
 
 //Récupérer le array basketContent déjà existant pour rajouter un autre produit
-function GetBasketContent(newItem){
+function getBasketContent(newItem){
     let basketContent = JSON.parse(localStorage.getItem("basketContent"));
     basketContent.push(newItem);
     console.log("basketContent existe déjà", basketContent);

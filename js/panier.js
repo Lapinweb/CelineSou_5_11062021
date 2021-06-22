@@ -1,13 +1,10 @@
-
-
 //Récupérer le contenu du panier dans le localStorage et le stocker dans une valeur
 let basketContent = getBasketContent();
 console.log("basketContent :", basketContent)
 
-
 function getBasketContent() {
     if (!localStorage.getItem("basketContent")) {
-        return [];
+        return []; //si le panier est vide, on retourne un tableau vide
     }else{
         let basketContent = JSON.parse(localStorage.getItem("basketContent"));
 
@@ -35,7 +32,7 @@ function createBasketList() {
             displayBasketItem(item);
         }
 
-        //La fonction pour supprimer l'article est ajouté après que les boutons soient créé pour être fonctionnelle
+        //La fonction des boutons pour supprimer l'article est ajouté après que les boutons sont créés pour être fonctionnelle
         buttonRemoveItem(basketContent);
     }
 }
@@ -74,6 +71,8 @@ function displayBasketItem(item) {
 //------------------------------------------------------------------------Afficher le prix total du panier-------------------------------------------------------------------------
 
 //Calculer le prix total
+calculateTotalPrice(basketContent);
+
 function calculateTotalPrice(listOfItems) {
     let totalPrice = 0
     for (item of listOfItems) {
@@ -82,21 +81,17 @@ function calculateTotalPrice(listOfItems) {
     totalPrice /= 100;
     console.log("prix total =", totalPrice.toFixed(2), "€")
     
-    return totalPrice
+    //Afficher le prix total sur la page
+    document.getElementById("total-price").textContent = "Prix total : " + totalPrice.toFixed(2) + "€";
+
+    //Srocker la valeur dans le localStorage
+    localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
 }
-
-let totalPrice = calculateTotalPrice(basketContent);
-
-//Afficher le prix total sur la page
-document.getElementById("total-price").textContent = "Prix total : " + totalPrice.toFixed(2) + "€";
-
-//Envoyer la valeur au localStorage
-localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
 
 
 //------------------------------------------------------------------- Retirer les produits du panier ------------------------------------------------------------------------
 
-//Bouton supprimer un article, la fonction doit être appelé après la création des boutons pour être fonctionnelle 
+//Bouton supprimer un article, la fonction est appelé après la création des boutons pour être fonctionnelle 
 function buttonRemoveItem(basketContent) {
     //Récupérer le tableau de tous les éléments des boutons
     let removeButtons = document.getElementsByClassName("btn-remove");
@@ -134,7 +129,7 @@ document.getElementById("btn-emptybasket").addEventListener("click", function(){
 
 //--------------------------------------------------------------------- Formulaire de contact -----------------------------------------------------------------------------------------------
 
-//Cacher le formulaire si le panier est vide
+//Cacher le formulaire, la fonction est appelé lors de l'affichage des produits si le panier est vide
 function hideForm(){
     const form = document.getElementById("form");
     form.classList.add("d-none");
@@ -159,9 +154,9 @@ const regexAddress = /^[a-zA-Z0-9éèêôîïÉÈÊ\s-]{3,}$/;
 const regexCity = /^[a-zA-ZéèêôîïÉÈÊ\s-]{3,100}$/;
 const regexEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
+const inputRegex = [regexFirstName, regexLastName, regexAddress, regexCity, regexEmail];
 
-
-//Fonction pour vérifier la valeur de input avec une regex et changer le style de manière dynamique
+//Fonction pour vérifier la valeur des input avec une regex et changer le style de manière dynamique
 function changeInputStyle(input, regex) {
     input.addEventListener("input", function(){
         if (regex.test(input.value) === false) {
@@ -176,13 +171,9 @@ function changeInputStyle(input, regex) {
     })
 }
 
-changeInputStyle(inputFirstName, regexFirstName);
-changeInputStyle(inputLastName, regexLastName);
-changeInputStyle(inputAddress, regexAddress);
-changeInputStyle(inputCity, regexCity);
-changeInputStyle(inputEmail, regexEmail);
-
-
+for (i = 0; i < formInputs.length; i++) {
+    changeInputStyle(formInputs[i], inputRegex[i])
+}
 
 
 //Fonction pour valider la valeur de input
@@ -193,7 +184,6 @@ function validateInput(input, regex){
         return false
     }
 }
-
 
 
 //Envoyer les données du formulaire
@@ -274,7 +264,7 @@ function getFormValues(contact) {
     return contact
 }
 
-//Récupérer le tableau de produits
+//Récupérer les ID des produits et les mettre dans un tableau
 function getItemId(){
     let itemsId = [];
     for (item of basketContent) {
