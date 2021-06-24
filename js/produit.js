@@ -5,9 +5,6 @@ const id = getId();
 function getId(){
     const param = window.location.search;
 
-    console.log("window.location.search :", param);
-    console.log("id :" , param.replace("?id=", ""));
-
     return param.replace("?id=", ""); //enlève les caractères inutilisés devant l'id
 }
 
@@ -35,7 +32,6 @@ function getOneItem(){
             }
         })
         .then(function(item){
-            console.log("item après fetch:", item);
             return item;
         })
         .catch(function(err){
@@ -89,12 +85,10 @@ basketButton.addEventListener("click", function(event){
 
 async function addToBasket() {
     //requête GET du produit, l'objet est stocké dans la valeur item
-    const item = await getOneItem(); 
-    console.log("selectedItem", item);
+    const item = await getOneItem();
 
     //Rajouter l'option de personnalisation sélectionné à l'objet item
     addSelectedOption(item);
-    console.log("item avec selectedOption :", item);
 
     //on vérifie si le array basketContent existe déjà dans le localStorage
     if(!localStorage.getItem("basketContent")){
@@ -111,13 +105,11 @@ function addSelectedOption(object){
     const selectionMenu = document.getElementById("option-produit");
 
     object.selectedOption = selectionMenu.value;
-    console.log("selectionMenu.value =", selectionMenu.value);
 }
 
 //Créer un array basketContent auquel on ajoute le produit
 function createNewBasketContent(newItem){
     let basketContent = [newItem];
-    console.log("basketContent créé", basketContent);
 
     //Envoyer vers le localStorage
     localStorage.setItem("basketContent", JSON.stringify(basketContent));
@@ -127,7 +119,6 @@ function createNewBasketContent(newItem){
 function getBasketContent(newItem){
     let basketContent = JSON.parse(localStorage.getItem("basketContent"));
     basketContent.push(newItem);
-    console.log("basketContent existe déjà", basketContent);
     
     //Envoyer vers le localStorage
     localStorage.setItem("basketContent", JSON.stringify(basketContent));

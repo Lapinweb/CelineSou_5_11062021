@@ -17,7 +17,6 @@ function getItems() {
             }
         })
         .then(function(items){
-            console.log("items :", items)
             return items;
         })
         .catch(function(error){

@@ -1,14 +1,11 @@
 //Récupérer le contenu du panier dans le localStorage et le stocker dans une valeur
 let basketContent = getBasketContent();
-console.log("basketContent :", basketContent)
 
 function getBasketContent() {
     if (!localStorage.getItem("basketContent")) {
         return []; //si le panier est vide, on retourne un tableau vide
     }else{
         let basketContent = JSON.parse(localStorage.getItem("basketContent"));
-
-        console.log("basketContent :", basketContent)
 
         return basketContent;
     }
@@ -79,7 +76,6 @@ function calculateTotalPrice(listOfItems) {
         totalPrice += item.price
     }
     totalPrice /= 100;
-    console.log("prix total =", totalPrice.toFixed(2), "€")
     
     //Afficher le prix total sur la page
     document.getElementById("total-price").textContent = "Prix total : " + totalPrice.toFixed(2) + "€";
@@ -199,19 +195,13 @@ document.getElementById("form-btn").addEventListener("click", function(event){
     let validateCity = validateInput(inputCity, regexCity);
     let validateEmail = validateInput(inputEmail, regexEmail);
 
-    console.log("Champs validés :",validateFirstName, validateLastName, validateAddress, validateCity, validateEmail);
-
     //le formulaire est validé si tous les champs sont validés
     if (validateFirstName && validateLastName && validateAddress && validateCity && validateEmail) {
         //récupérer les valeurs du formulaire dans l'objet contact
-        let contact = getFormValues();
-        console.log("contact :", contact);        
+        let contact = getFormValues(); 
         
         //récupérer le tableau de produits
         let products = getItemId();
-        console.log("products :", products);
-
-        console.log("contact et products :", {contact, products})
         
         //envoyer les données au serveur
         fetch("http://localhost:3000/api/teddies/order", {
@@ -229,7 +219,6 @@ document.getElementById("form-btn").addEventListener("click", function(event){
         })
         .then(function(res){
             //on envoie l'ID de commande dans le localStorage
-            console.log("réponse :", res);
             localStorage.setItem("orderId", JSON.stringify(res.orderId));
 
             //on envoie l'utilisateur vers la page de confirmation
